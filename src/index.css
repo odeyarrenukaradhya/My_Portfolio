@@ -1,0 +1,35 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer utilities {
+  .font-sohne {
+    font-family: "Söhne", "sohne", "Helvetica Neue", Helvetica, "Inter", Arial, sans-serif;
+  }
+
+  .font-sohne-600 {
+    font-family: "Söhne", "sohne", "Helvetica Neue", Helvetica, "Inter", Arial, sans-serif;
+    font-weight: 600;
+  }
+
+  .text-stroke-headline {
+    color: transparent;
+    -webkit-text-stroke: 2.2px #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  .text-stroke-headline-sm {
+    color: transparent;
+    -webkit-text-stroke: 1.6px #0f172a;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom scrollbars & smooth rendering */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
