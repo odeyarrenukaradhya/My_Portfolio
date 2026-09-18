@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, MapPin, Phone, Dribbble, Instagram, Linkedin, Send, Check } from 'lucide-react';
+import { Mail, MapPin, Phone, Dribbble, Instagram, Linkedin, Send, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const BehanceIcon = ({ className = "w-4 h-4" }) => (
@@ -12,34 +12,15 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
-    services: ['Website design', 'UX design']
+    message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const toggleService = (service) => {
-    setFormData((prev) => ({
-      ...prev,
-      services: prev.services.includes(service)
-        ? prev.services.filter((s) => s !== service)
-        : [...prev.services, service]
-    }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 4000);
   };
-
-  const availableServices = [
-    'Website design',
-    'Content creation',
-    'UX design',
-    'Strategy & consulting',
-    'User research',
-    'Other'
-  ];
 
   return (
     <div className="w-full max-w-[1280px] h-full max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-5 md:p-6 relative overflow-hidden flex flex-col justify-between">
@@ -64,17 +45,17 @@ export default function ContactSection() {
             {/* Info Stack */}
             <div className="space-y-5 sm:space-y-6">
               
-              {/* Chat to us */}
+              {/* Direct Email */}
               <div className="flex items-start gap-3.5 group">
                 <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 flex-shrink-0 group-hover:bg-neutral-900 group-hover:text-white transition-colors duration-300">
-                  <MessageSquare className="w-4 h-4 stroke-[2]" />
+                  <Mail className="w-4 h-4 stroke-[2]" />
                 </div>
                 <div>
                   <h4 className="font-sans font-bold text-neutral-900 text-sm sm:text-base leading-tight">
-                    Chat to us
+                    Direct Email
                   </h4>
                   <p className="font-sans text-neutral-500 text-xs mt-0.5">
-                    Our friendly team is here to help.
+                    Feel free to reach out for inquiries or design projects.
                   </p>
                   <a href="mailto:odeyarrenukaradhya@gmail.com" className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 inline-block hover:underline">
                     odeyarrenukaradhya@gmail.com
@@ -82,17 +63,17 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              {/* Visit us */}
+              {/* Location */}
               <div className="flex items-start gap-3.5 group">
                 <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 flex-shrink-0 group-hover:bg-neutral-900 group-hover:text-white transition-colors duration-300">
                   <MapPin className="w-4 h-4 stroke-[2]" />
                 </div>
                 <div>
                   <h4 className="font-sans font-bold text-neutral-900 text-sm sm:text-base leading-tight">
-                    Visit us
+                    Location
                   </h4>
                   <p className="font-sans text-neutral-500 text-xs mt-0.5">
-                    Come say hello at our office HQ.
+                    Based in India — available for global opportunities.
                   </p>
                   <p className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 leading-snug">
                     Bengaluru, Karnataka 560001, India
@@ -100,17 +81,17 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              {/* Call us */}
+              {/* Phone / WhatsApp */}
               <div className="flex items-start gap-3.5 group">
                 <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 flex-shrink-0 group-hover:bg-neutral-900 group-hover:text-white transition-colors duration-300">
                   <Phone className="w-4 h-4 stroke-[2]" />
                 </div>
                 <div>
                   <h4 className="font-sans font-bold text-neutral-900 text-sm sm:text-base leading-tight">
-                    Call us
+                    Phone / WhatsApp
                   </h4>
                   <p className="font-sans text-neutral-500 text-xs mt-0.5">
-                    Mon-Fri from 9am to 6pm IST.
+                    Available Mon–Fri, 9:00 AM – 6:00 PM IST.
                   </p>
                   <a href="tel:+917795561563" className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 inline-block hover:underline">
                     +91 77955 61563
@@ -121,7 +102,7 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Bottom Social Icons Row: Dribbble, Instagram, LinkedIn, Behance */}
+          {/* Bottom Social Icons Row */}
           <div className="pt-5 sm:pt-6 flex items-center gap-2.5">
             <a href="https://dribbble.com/renukaradhya-odeyar" target="_blank" rel="noopener noreferrer" aria-label="Dribbble" className="w-9 h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
               <Dribbble className="w-4 h-4" />
@@ -139,16 +120,16 @@ export default function ContactSection() {
 
         </div>
 
-        {/* RIGHT COLUMN: Electric Lime Form Card */}
+        {/* RIGHT COLUMN: Professional Contact Form Card */}
         <div className="w-full lg:w-7/12 bg-[#a3f036] rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 md:p-7 flex flex-col justify-between text-neutral-900 shadow-md overflow-y-auto max-h-full">
           
           <div>
             <h2 className="font-sans font-extrabold text-xl sm:text-3xl md:text-4xl leading-tight text-neutral-950 tracking-tight">
-              Got ideas? We've got<br className="hidden sm:inline" /> the skills. Let's team up.
+              Have a product vision?<br className="hidden sm:inline" /> Let’s build it together.
             </h2>
             
             <p className="font-sans font-medium text-neutral-800 text-xs sm:text-sm mt-1 sm:mt-1.5">
-              Tell us more about yourself and what you've got in mind.
+              Share details about your product scope, timeline, or design requirements.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-4 sm:mt-5 space-y-3 sm:space-y-4">
@@ -158,7 +139,7 @@ export default function ContactSection() {
                 <input
                   type="text"
                   required
-                  placeholder="Your name"
+                  placeholder="Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-xs sm:text-sm placeholder:text-neutral-700 outline-none transition-colors"
@@ -170,7 +151,7 @@ export default function ContactSection() {
                 <input
                   type="email"
                   required
-                  placeholder="you@company.com"
+                  placeholder="your.email@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-xs sm:text-sm placeholder:text-neutral-700 outline-none transition-colors"
@@ -182,7 +163,7 @@ export default function ContactSection() {
                 <textarea
                   rows={3}
                   required
-                  placeholder="Tell us a little about the project..."
+                  placeholder="Tell me about your product, project scope, or opportunity..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-xs sm:text-sm placeholder:text-neutral-700 outline-none resize-none transition-colors"
@@ -204,7 +185,7 @@ export default function ContactSection() {
                     </>
                   ) : (
                     <>
-                      <span>Let's get started!</span>
+                      <span>Send Message</span>
                       <Send className="w-4 h-4" />
                     </>
                   )}

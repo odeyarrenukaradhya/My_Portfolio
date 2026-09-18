@@ -81,9 +81,15 @@ export default function ProjectDetailPage({ project, onBack, onNextProject, onPr
             <div className="flex flex-wrap items-center gap-4 mt-6">
               {/* LIVE Button */}
               <motion.a
-                href={project.liveUrl || '#'}
-                target="_blank"
+                href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : '#'}
+                target={project.liveUrl && project.liveUrl !== '#' ? "_blank" : "_self"}
                 rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (!project.liveUrl || project.liveUrl === '#') {
+                    e.preventDefault();
+                    alert('Live demo for this project will be available soon!');
+                  }
+                }}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="bg-black hover:bg-neutral-800 text-white px-6 py-2.5 rounded-full font-serif font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer inline-flex items-center justify-center"

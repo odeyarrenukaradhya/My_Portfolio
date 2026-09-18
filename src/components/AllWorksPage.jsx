@@ -5,17 +5,17 @@ import { motion } from 'framer-motion';
 export default function AllWorksPage({ projects = [], onBack, onSelectProject }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.4 }}
-      className="w-full max-w-[1240px] h-full max-h-[92vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-4 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between my-auto"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 15 }}
+      transition={{ duration: 0.35 }}
+      className="w-full max-w-[1280px] h-full max-h-[95vh] relative flex flex-col justify-between my-auto p-2 sm:p-4"
     >
-      {/* Header Bar */}
-      <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-neutral-100 z-10 flex-shrink-0">
+      {/* Top Navigation Bar */}
+      <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-neutral-300/80 z-10 flex-shrink-0">
         <button
           onClick={onBack}
-          className="font-serif font-bold text-neutral-700 hover:text-black flex items-center gap-2 text-sm sm:text-base cursor-pointer transition-colors group"
+          className="font-serif font-bold text-neutral-800 hover:text-black flex items-center gap-2 text-sm sm:text-base cursor-pointer transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           <span>Back to Work section</span>
@@ -28,8 +28,8 @@ export default function AllWorksPage({ projects = [], onBack, onSelectProject })
         </div>
       </div>
 
-      {/* Vertical Scrollable Container - All Projects Listed One Below Another */}
-      <div className="w-full flex-1 overflow-y-auto my-3 sm:my-4 pr-1 sm:pr-3 space-y-6 sm:space-y-10 scroll-smooth">
+      {/* Projects List Container */}
+      <div className="w-full flex-1 overflow-y-auto my-3 sm:my-4 pr-1 sm:pr-3 space-y-6 sm:space-y-8 scroll-smooth scrollbar-thin scrollbar-thumb-neutral-300">
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
@@ -37,7 +37,7 @@ export default function AllWorksPage({ projects = [], onBack, onSelectProject })
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.08 }}
-            className="bg-[#f8f9fc] rounded-[20px] sm:rounded-[30px] border border-neutral-200/90 p-4 sm:p-7 md:p-8 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6 items-center group hover:shadow-md transition-all"
+            className="bg-white rounded-[24px] sm:rounded-[32px] border border-neutral-200/90 p-5 sm:p-7 md:p-8 shadow-[0_15px_40px_rgba(0,0,0,0.06)] grid grid-cols-1 lg:grid-cols-12 gap-6 items-center group hover:shadow-xl transition-all duration-300"
           >
             {/* Left Content Column */}
             <div className="lg:col-span-6 flex flex-col justify-center">
@@ -104,8 +104,8 @@ export default function AllWorksPage({ projects = [], onBack, onSelectProject })
         ))}
       </div>
 
-      {/* Footer info */}
-      <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-neutral-100 text-xs text-neutral-400 font-serif flex-shrink-0">
+      {/* Bottom Footer Info */}
+      <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-neutral-300/80 text-xs text-neutral-500 font-serif flex-shrink-0">
         <span>Showing all {projects.length} projects</span>
         <button onClick={onBack} className="hover:text-neutral-900 font-semibold transition-colors cursor-pointer">
           Back to Work section ↑

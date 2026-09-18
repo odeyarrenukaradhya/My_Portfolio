@@ -363,7 +363,7 @@ const DepthCarousel = ({
         {data.map((item, i) => (
           <div
             key={i}
-            className="absolute left-1/2 top-1/2 cursor-pointer overflow-hidden bg-[#0b0d12] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.65),0_8px_20px_-10px_rgba(0,0,0,0.5)] [transform:translate(-50%,-50%)] [transform-origin:center] [will-change:transform,opacity,filter]"
+            className="absolute left-1/2 top-1/2 cursor-pointer overflow-hidden bg-transparent shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] [transform:translate(-50%,-50%)] [transform-origin:center] [will-change:transform,opacity,filter]"
             ref={el => {
               cardRefs.current[i] = el;
             }}
