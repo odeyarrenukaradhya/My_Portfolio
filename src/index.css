@@ -23,13 +23,37 @@
     -webkit-text-stroke: 1.6px #0f172a;
     letter-spacing: -0.02em;
   }
+  .gpu-layer {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
 }
 
-/* Custom scrollbars & smooth rendering */
+/* Custom scrollbars & ultra-smooth 60fps/120fps rendering */
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
+
+/* Hide scrollbar globally across all elements & browsers */
+::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

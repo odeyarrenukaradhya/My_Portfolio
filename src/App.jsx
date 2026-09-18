@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -13,6 +13,7 @@ import ContactSection from './components/ContactSection';
 import SkillsSection from './components/SkillsSection';
 import TextType from './components/TextType';
 import DepthCarousel from './components/DepthCarousel';
+import TextLoop from './components/TextLoop';
 
 const getTimeBasedGreeting = () => {
   const hour = new Date().getHours();
@@ -27,6 +28,9 @@ export default function App() {
   const [activeProject, setActiveProject] = useState(null);
   const [activeSection, setActiveSection] = useState('#home');
   const [targetSection, setTargetSection] = useState('home');
+
+  const mainScrollContainerRef = useRef(null);
+  const worksSectionRef = useRef(null);
 
   const handleNavigateToSection = (targetId) => {
     setActiveSection(`#${targetId}`);
@@ -89,7 +93,7 @@ export default function App() {
       specs: '24+ Dashboard Screens • 5 SaaS Modules • 1 Design System',
       image: '/cortineix.jpg',
       bgColor: 'bg-[#090e17]',
-      liveUrl: '#',
+      liveUrl: 'https://cortinex-billingsystem.cloud/',
       caseStudyUrl: '#'
     },
     {
@@ -123,14 +127,11 @@ export default function App() {
   ];
 
   const designShowcaseItems = [
-    { image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80', alt: 'E-Commerce Mobile UI' },
-    { image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80', alt: 'SaaS Analytics Dashboard' },
-    { image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80', alt: 'Design System UI' },
-    { image: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800&auto=format&fit=crop&q=80', alt: 'Fintech Mobile App' },
-    { image: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&auto=format&fit=crop&q=80', alt: 'Agency Portfolio UI' },
-    { image: 'https://images.unsplash.com/photo-1542744094-3a31b272c490?w=800&auto=format&fit=crop&q=80', alt: 'Product UX Research' },
-    { image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800&auto=format&fit=crop&q=80', alt: 'Mobile Wireframes' },
-    { image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=800&auto=format&fit=crop&q=80', alt: 'Visual Branding' },
+    { image: '/designs/design-monster-white.png', alt: 'Monster Energy Zero Ultra Poster' },
+    { image: '/designs/design-nike-gold.png', alt: 'Nike Mercurial Strike Gold Poster' },
+    { image: '/designs/design-puma-speedcat.png', alt: 'Puma Speedcat Forever Faster Poster' },
+    { image: '/designs/design-monster-black.png', alt: 'Monster Energy Ultra Black Poster' },
+    { image: '/designs/design-blue-chips.png', alt: 'Blue Chips Classic Salted Packaging & Poster' },
   ];
 
   const handleSelectProject = (project) => {
@@ -183,6 +184,7 @@ export default function App() {
         {viewMode === 'main' && (
           <motion.div
             key="main"
+            ref={mainScrollContainerRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -194,7 +196,7 @@ export default function App() {
                 }
               }
             }}
-            className="h-screen w-screen overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth"
+            className="h-screen w-screen overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {/* PAGE 1: HOME */}
             <section id="home" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
@@ -273,12 +275,16 @@ export default function App() {
             </section>
 
             {/* PAGE 3: WORKS SECTION */}
-            <section id="works" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
-              <WorksSection
-                projects={projects}
-                onSelectProject={handleSelectProject}
-                onViewAll={() => setViewMode('all-works')}
-              />
+            <section id="works" ref={worksSectionRef} className="h-screen md:h-[260vh] w-screen relative snap-start snap-always">
+              <div className="sticky top-0 h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center overflow-hidden">
+                <WorksSection
+                  projects={projects}
+                  onSelectProject={handleSelectProject}
+                  onViewAll={() => setViewMode('all-works')}
+                  containerRef={mainScrollContainerRef}
+                  sectionRef={worksSectionRef}
+                />
+              </div>
             </section>
 
             {/* PAGE 4: SKILLS SECTION */}
@@ -298,25 +304,50 @@ export default function App() {
                   <span className="text-xs font-sans text-neutral-400 font-semibold">3D Depth Showcase</span>
                 </div>
 
-                {/* DepthCarousel 3D Showcase */}
+                {/* DepthCarousel 3D Showcase with TextLoop Ribbon Background */}
                 <div className="relative w-full flex-1 my-2 overflow-hidden flex items-center justify-center">
-                  <DepthCarousel
-                    items={designShowcaseItems}
-                    depth={220}
-                    spread={90}
-                    tilt={22}
-                    tiltDirection="right"
-                    perspective={1400}
-                    visibleCards={4}
-                    falloff={0.2}
-                    blur={6}
-                    autoplay={true}
-                    autoplayDelay={3200}
-                    loop={true}
-                    cardWidth={300}
-                    cardHeight={380}
-                    radius={18}
-                  />
+                  
+                  {/* Background TextLoop Ribbon Effect */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 select-none z-0 scale-105">
+                    <TextLoop
+                      text="SELECTED DESIGNS ✦ VISUAL ART ✦ UI/UX PROTOTYPES"
+                      shape="wave"
+                      speed={75}
+                      direction="forward"
+                      separator="✦"
+                      curviness={100}
+                      fontSize={42}
+                      fontWeight={900}
+                      letterSpacing={3}
+                      uppercase
+                      color="#000000"
+                      ribbon
+                      ribbonColor="#a3f036"
+                      ribbonWidth={80}
+                      pauseOnHover={false}
+                    />
+                  </div>
+
+                  {/* Foreground DepthCarousel */}
+                  <div className="relative z-10 w-full flex items-center justify-center">
+                    <DepthCarousel
+                      items={designShowcaseItems}
+                      depth={200}
+                      spread={125}
+                      tilt={16}
+                      tiltDirection="right"
+                      perspective={1400}
+                      visibleCards={3}
+                      falloff={0.18}
+                      blur={4}
+                      autoplay={true}
+                      autoplayDelay={3500}
+                      loop={true}
+                      cardWidth={560}
+                      cardHeight={350}
+                      radius={20}
+                    />
+                  </div>
                 </div>
 
                 {/* Clean Minimalist Footer */}
