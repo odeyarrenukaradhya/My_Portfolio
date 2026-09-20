@@ -23,7 +23,7 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="w-full max-w-[1280px] h-full max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-5 md:p-6 relative overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-5 md:p-6 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
       
       {/* Content Grid */}
       <div className="w-full h-full flex flex-col lg:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-y-auto lg:overflow-hidden">

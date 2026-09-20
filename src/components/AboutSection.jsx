@@ -80,16 +80,16 @@ export default function AboutSection() {
   };
 
   return (
-    <div className="w-full max-w-[1280px] h-full max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-4 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
       
       {/* Top Header & Tab Controls */}
       <div className="w-full flex flex-col items-center pt-1 sm:pt-2 pb-2 sm:pb-3 z-10">
-        <h2 className="font-serif font-bold text-3xl sm:text-5xl md:text-6xl text-neutral-900 tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)] text-center">
+        <h2 className="font-serif font-bold text-2xl sm:text-5xl md:text-6xl text-neutral-900 tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)] text-center">
           About Me
         </h2>
 
         {/* Interactive Tab Switcher */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-3 bg-neutral-100/90 p-1.5 rounded-full border border-neutral-200 shadow-inner max-w-full overflow-x-auto">
+        <div className="flex flex-nowrap sm:flex-wrap items-center justify-start sm:justify-center gap-1 sm:gap-2 mt-2 sm:mt-3 bg-neutral-100/90 p-1 sm:p-1.5 rounded-full border border-neutral-200 shadow-inner max-w-full overflow-x-auto scrollbar-none w-full sm:w-auto">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -97,7 +97,7 @@ export default function AboutSection() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full font-sans font-bold text-xs sm:text-sm flex items-center gap-1.5 transition-all duration-300 cursor-pointer ${
+                className={`relative px-2.5 sm:px-5 py-1 sm:py-2 rounded-full font-sans font-bold text-[11px] sm:text-sm flex items-center gap-1 sm:gap-1.5 transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${
                   isActive ? 'text-black' : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
@@ -108,8 +108,8 @@ export default function AboutSection() {
                     transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                   />
                 )}
-                <span className="relative z-10 flex items-center gap-1.5">
-                  <Icon className="w-3.5 h-3.5" />
+                <span className="relative z-10 flex items-center gap-1 sm:gap-1.5">
+                  <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   <span>{tab.label}</span>
                 </span>
               </button>
