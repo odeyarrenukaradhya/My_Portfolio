@@ -257,7 +257,7 @@ export default function SkillsSection() {
   }));
 
   return (
-    <div className="w-full max-w-[1280px] h-full max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-4 sm:p-7 md:p-9 relative overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-7 md:p-9 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
       
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between pb-3 border-b border-neutral-100 z-10 flex-shrink-0 gap-3">

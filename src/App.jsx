@@ -14,6 +14,7 @@ import SkillsSection from './components/SkillsSection';
 import TextType from './components/TextType';
 import DepthCarousel from './components/DepthCarousel';
 import TextLoop from './components/TextLoop';
+import Preloader from './components/Preloader';
 
 const getTimeBasedGreeting = () => {
   const hour = new Date().getHours();
@@ -24,6 +25,7 @@ const getTimeBasedGreeting = () => {
 };
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState('main'); // 'main' | 'project-detail' | 'all-works'
   const [activeProject, setActiveProject] = useState(null);
   const [activeSection, setActiveSection] = useState('#home');
@@ -155,6 +157,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-screen bg-[#e4e5e9] font-sans selection:bg-neutral-900 selection:text-white">
+      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+
       <AnimatePresence mode="wait">
         
         {/* VIEW MODE 1: PROJECT DETAIL PAGE */}
@@ -199,14 +203,14 @@ export default function App() {
             className="h-screen w-screen overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {/* PAGE 1: HOME */}
-            <section id="home" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
-              <div className="w-full max-w-[1280px] h-full max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
+            <section id="home" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start">
+              <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
                 
                 {/* Header / Navbar */}
                 <Navbar onNavigate={handleNavigateToSection} activeHref={activeSection} />
 
                 {/* Hero Main Section Container */}
-                <main className="relative w-full pt-2 md:pt-4 flex-1 flex flex-col justify-between overflow-hidden">
+                <main className="relative w-full pt-2 md:pt-4 flex-1 flex flex-col justify-between overflow-hidden min-h-[460px] sm:min-h-0">
                   
                   {/* Big Headline Block with TextType Typewriter Animation */}
                   <div className="w-full flex flex-col items-center justify-center z-10 pointer-events-none select-none pt-1">
@@ -219,7 +223,7 @@ export default function App() {
                       showCursor={true}
                       cursorCharacter="|"
                       cursorClassName="text-[#a3f036] font-extrabold ml-1 animate-pulse"
-                      className="font-sohne-600 uppercase text-[2.2rem] sm:text-[4rem] md:text-[5.2rem] lg:text-[6.2rem] tracking-tight leading-[0.9] text-center text-neutral-900"
+                      className="font-sohne-600 uppercase text-[1.8rem] xs:text-[2.2rem] sm:text-[3.8rem] md:text-[5.2rem] lg:text-[6.2rem] tracking-tight leading-[0.9] text-center text-neutral-900"
                     />
                   </div>
 
@@ -231,20 +235,20 @@ export default function App() {
                   </div>
 
                   {/* Bottom Layout Row */}
-                  <div className="w-full flex flex-col md:flex-row items-end justify-between gap-4 z-20 pt-4 pb-1 relative">
+                  <div className="w-full flex flex-col md:flex-row items-end justify-between gap-3 sm:gap-4 z-20 pt-4 pb-1 relative">
                     
                     {/* Left Content Block */}
                     <motion.div 
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.25 }}
-                      className="max-w-sm pl-1 sm:pl-2"
+                      className="max-w-sm pl-1 sm:pl-2 text-left w-full md:w-auto"
                     >
-                      <h3 className="font-sans font-bold text-neutral-900 text-xl sm:text-2xl md:text-3xl tracking-tight">
+                      <h3 className="font-sans font-bold text-neutral-900 text-lg sm:text-2xl md:text-3xl tracking-tight">
                         UI/UX Designer
                       </h3>
 
-                      <p className="font-sans text-neutral-600 text-xs sm:text-[13px] mt-1.5 leading-relaxed max-w-[300px]">
+                      <p className="font-sans text-neutral-600 text-xs sm:text-[13px] mt-1 sm:mt-1.5 leading-relaxed max-w-[280px] sm:max-w-[300px]">
                         Designing digital products that are clear, usable, and conversion focused.
                       </p>
 
@@ -252,7 +256,7 @@ export default function App() {
                         href="#about"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] px-5 py-2.5 rounded-full font-sans font-extrabold text-xs sm:text-[13px] flex items-center gap-2 transition-all duration-300 w-fit mt-3 cursor-pointer group active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000000]"
+                        className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[3px_3px_0px_0px_#000000] sm:shadow-[4px_4px_0px_0px_#000000] px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-sans font-extrabold text-xs sm:text-[13px] flex items-center gap-2 transition-all duration-300 w-fit mt-2.5 sm:mt-3 cursor-pointer group active:translate-x-0.5 active:translate-y-0.5"
                       >
                         <span>About Me ↓</span>
                         <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -260,7 +264,7 @@ export default function App() {
                     </motion.div>
 
                     {/* Right Content Block: Social Pills */}
-                    <div className="w-full md:w-auto flex justify-end">
+                    <div className="w-full md:w-auto flex justify-start md:justify-end">
                       <SocialPills />
                     </div>
 
@@ -270,13 +274,13 @@ export default function App() {
             </section>
 
             {/* PAGE 2: ABOUT ME SECTION */}
-            <section id="about" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
+            <section id="about" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start">
               <AboutSection />
             </section>
 
             {/* PAGE 3: WORKS SECTION */}
-            <section id="works" ref={worksSectionRef} className="h-screen md:h-[260vh] w-screen relative snap-start snap-always">
-              <div className="sticky top-0 h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center overflow-hidden">
+            <section id="works" ref={worksSectionRef} className="min-h-[100dvh] md:h-[260vh] w-full md:w-screen relative snap-start">
+              <div className="sticky top-0 h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center overflow-hidden">
                 <WorksSection
                   projects={projects}
                   onSelectProject={handleSelectProject}
@@ -288,17 +292,17 @@ export default function App() {
             </section>
 
             {/* PAGE 4: SKILLS SECTION */}
-            <section id="skills" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
+            <section id="skills" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start">
               <SkillsSection />
             </section>
 
             {/* PAGE 4: DESIGNS SHOWCASE */}
-            <section id="designs" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
-              <div className="w-full max-w-[1280px] h-full max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-4 sm:p-8 relative overflow-hidden flex flex-col justify-between">
+            <section id="designs" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start">
+              <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
                 
                 {/* Clean Title Header */}
                 <div className="w-full pb-3 border-b border-neutral-100 z-10 flex items-center justify-between">
-                  <h2 className="font-clash text-3xl sm:text-5xl font-extrabold text-neutral-900 tracking-tight">
+                  <h2 className="font-clash text-2xl sm:text-4xl md:text-5xl font-extrabold text-neutral-900 tracking-tight">
                     Designs
                   </h2>
                   <span className="text-xs font-sans text-neutral-400 font-semibold">3D Depth Showcase</span>
@@ -308,7 +312,7 @@ export default function App() {
                 <div className="relative w-full flex-1 my-2 overflow-hidden flex items-center justify-center">
                   
                   {/* Background TextLoop Ribbon Effect */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 select-none z-0 scale-105">
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 sm:opacity-30 select-none z-0 scale-105">
                     <TextLoop
                       text="SELECTED DESIGNS ✦ VISUAL ART ✦ UI/UX PROTOTYPES"
                       shape="wave"
@@ -316,7 +320,7 @@ export default function App() {
                       direction="forward"
                       separator="✦"
                       curviness={100}
-                      fontSize={42}
+                      fontSize={32}
                       fontWeight={900}
                       letterSpacing={3}
                       uppercase
@@ -329,22 +333,22 @@ export default function App() {
                   </div>
 
                   {/* Foreground DepthCarousel */}
-                  <div className="relative z-10 w-full flex items-center justify-center">
+                  <div className="relative z-10 w-full flex items-center justify-center overflow-hidden">
                     <DepthCarousel
                       items={designShowcaseItems}
-                      depth={200}
-                      spread={125}
+                      depth={typeof window !== 'undefined' && window.innerWidth < 640 ? 110 : 200}
+                      spread={typeof window !== 'undefined' && window.innerWidth < 640 ? 75 : 125}
                       tilt={16}
                       tiltDirection="right"
                       perspective={1400}
-                      visibleCards={3}
+                      visibleCards={typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 3}
                       falloff={0.18}
                       blur={4}
                       autoplay={true}
                       autoplayDelay={3500}
                       loop={true}
-                      cardWidth={560}
-                      cardHeight={350}
+                      cardWidth={typeof window !== 'undefined' && window.innerWidth < 640 ? 280 : 560}
+                      cardHeight={typeof window !== 'undefined' && window.innerWidth < 640 ? 200 : 350}
                       radius={20}
                     />
                   </div>
@@ -362,7 +366,7 @@ export default function App() {
             </section>
 
             {/* PAGE 5: CONTACT SECTION */}
-            <section id="contact" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start snap-always">
+            <section id="contact" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start">
               <ContactSection />
             </section>
 

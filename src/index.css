@@ -36,12 +36,20 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
+  touch-action: manipulation;
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 767px) {
+  .mobile-snap-container {
+    scroll-snap-type: y proximity !important;
+  }
 }
 
 /* Hide scrollbar globally across all elements & browsers */
@@ -56,4 +64,5 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 
