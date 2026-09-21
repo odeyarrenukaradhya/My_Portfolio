@@ -17,30 +17,39 @@ const DEFAULT_ITEMS = [
 ];
 
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-const normalizeItem = (it) => (typeof it === 'string' ? { image: it, alt: '' } : { image: it.image || it.src, alt: it.alt || '' });
+const normalizeItem = (it) =>
+  typeof it === 'string'
+    ? { image: it, alt: '', title: '', category: '' }
+    : {
+        image: it.image || it.src,
+        alt: it.alt || '',
+        title: it.title || '',
+        category: it.category || ''
+      };
 
 const DepthCarousel = ({
   items = DEFAULT_ITEMS,
-  cardWidth = 320,
-  cardHeight = 400,
+  cardWidth = 560,
+  cardHeight = 350,
   radius = 20,
   tint = '#05060a',
-  depth = 220,
-  spread = 90,
-  tilt = 22,
+  depth = 200,
+  spread = 125,
+  tilt = 16,
   tiltDirection = 'right',
   perspective = 1400,
-  visibleCards = 4,
-  falloff = 0.2,
-  blur = 6,
-  duration = 700,
-  ease = 'power3.out',
+  visibleCards = 3,
+  falloff = 0.18,
+  blur = 4,
+  duration = 550,
+  ease = 'power2.out',
   autoplay = true,
-  autoplayDelay = 3200,
+  autoplayDelay = 3500,
   loop = true,
   showControls = true,
   showIndicators = true,
   onChange,
+  onItemClick,
   className = ''
 }) => {
   const data = useMemo(() => (Array.isArray(items) ? items : []).map(normalizeItem), [items]);
@@ -65,20 +74,44 @@ const DepthCarousel = ({
 
   const [active, setActive] = useState(0);
 
+  // Dynamic responsive dimensions for mobile vs tablet vs desktop
+  const [dimensions, setDimensions] = useState(() => {
+    const isClient = typeof window !== 'undefined';
+    const isMobile = isClient ? window.innerWidth < 640 : false;
+    const w = isClient ? window.innerWidth : 1200;
+    if (isMobile) {
+      const targetW = Math.min(Math.max(Math.round(w - 24), 295), 360);
+      return {
+        cardWidth: targetW,
+        cardHeight: Math.min(Math.round(targetW * 0.85), 310),
+        spread: 24,
+        depth: 85,
+        isMobile: true
+      };
+    }
+    return {
+      cardWidth: cardWidth || 560,
+      cardHeight: cardHeight || 350,
+      spread: spread || 125,
+      depth: depth || 200,
+      isMobile: false
+    };
+  });
+
   onChangeRef.current = onChange;
   cfgRef.current = {
     count,
-    depth,
-    spread,
+    depth: dimensions.depth,
+    spread: dimensions.spread,
     tilt,
     tiltDirection,
-    visibleCards,
+    visibleCards: dimensions.isMobile ? 2 : visibleCards,
     falloff,
     blur,
     duration,
     ease,
     loop,
-    cardWidth,
+    cardWidth: dimensions.cardWidth,
     autoplayDelay
   };
 
@@ -183,15 +216,70 @@ const DepthCarousel = ({
     const root = rootRef.current;
     if (!root) return;
     const ro = new ResizeObserver(entries => {
+      if (!entries[0]) return;
       const w = entries[0].contentRect.width;
-      const cfg = cfgRef.current;
-      const needed = cfg.cardWidth + Math.abs(cfg.spread) * 2 + 120;
-      scaleRef.current = clamp(w / needed, 0.4, 1);
+      const isMobile = w < 640;
+      const isTablet = w >= 640 && w < 1024;
+
+      let targetW;
+      let targetH;
+      let targetSpread;
+      let targetDepth;
+
+      if (isMobile) {
+        // MOBILE: Significantly larger cards (e.g. 330px - 355px)
+        // Taking up 92-95% of container width so they feel prominent, not like "small screens"
+        targetW = Math.min(Math.max(Math.round(w - 20), 295), 360);
+        targetH = Math.min(Math.round(targetW * 0.85), 315);
+        targetSpread = 24;
+        targetDepth = 85;
+        scaleRef.current = 1; // Pure 1:1 scale on mobile, no downscaling blur!
+      } else if (isTablet) {
+        targetW = 460;
+        targetH = 310;
+        targetSpread = 75;
+        targetDepth = 140;
+        const needed = targetW + targetSpread * 1.5 + 40;
+        scaleRef.current = clamp(w / needed, 0.75, 1);
+      } else {
+        targetW = cardWidth || 560;
+        targetH = cardHeight || 350;
+        targetSpread = spread || 125;
+        targetDepth = depth || 200;
+        const needed = targetW + targetSpread * 2 + 120;
+        scaleRef.current = clamp(w / needed, 0.4, 1);
+      }
+
+      cfgRef.current.cardWidth = targetW;
+      cfgRef.current.cardHeight = targetH;
+      cfgRef.current.spread = targetSpread;
+      cfgRef.current.depth = targetDepth;
+      cfgRef.current.visibleCards = isMobile ? 2 : visibleCards;
+
+      setDimensions(prev => {
+        if (
+          prev.cardWidth === targetW &&
+          prev.cardHeight === targetH &&
+          prev.spread === targetSpread &&
+          prev.depth === targetDepth &&
+          prev.isMobile === isMobile
+        ) {
+          return prev;
+        }
+        return {
+          cardWidth: targetW,
+          cardHeight: targetH,
+          spread: targetSpread,
+          depth: targetDepth,
+          isMobile
+        };
+      });
+
       layout(posRef.current);
     });
     ro.observe(root);
     return () => ro.disconnect();
-  }, [layout]);
+  }, [layout, cardWidth, cardHeight, spread, depth, visibleCards]);
 
   useEffect(() => {
     const el = rootRef.current;
@@ -282,8 +370,9 @@ const DepthCarousel = ({
     (index) => {
       if (dragRef.current?.moved) return;
       setFocus(index, true);
+      onItemClick?.(data[index], index);
     },
-    [setFocus]
+    [setFocus, onItemClick, data]
   );
 
   useEffect(() => {
@@ -347,7 +436,7 @@ const DepthCarousel = ({
   return (
     <div
       ref={rootRef}
-      className={`relative flex h-full min-h-[320px] w-full cursor-grab touch-pan-y select-none items-center justify-center outline-none [perspective-origin:50%_50%] active:cursor-grabbing focus-visible:rounded-xl focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:[outline-offset:4px] ${className}`.trim()}
+      className={`relative flex h-full min-h-[380px] xs:min-h-[420px] sm:min-h-[360px] w-full cursor-grab touch-pan-y select-none items-center justify-center outline-none [perspective-origin:50%_50%] active:cursor-grabbing focus-visible:rounded-xl focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:[outline-offset:4px] ${className}`.trim()}
       style={{ perspective: `${perspective}px` }}
       role="group"
       aria-roledescription="carousel"
@@ -363,18 +452,22 @@ const DepthCarousel = ({
         {data.map((item, i) => (
           <div
             key={i}
-            className="absolute left-1/2 top-1/2 cursor-pointer overflow-hidden bg-transparent shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] [transform:translate(-50%,-50%)] [transform-origin:center] [will-change:transform,opacity,filter]"
+            className="absolute left-1/2 top-1/2 cursor-zoom-in overflow-hidden bg-neutral-900 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] [transform:translate(-50%,-50%)] [transform-origin:center] [will-change:transform,opacity,filter] group"
             ref={el => {
               cardRefs.current[i] = el;
             }}
-            style={{ width: cardWidth, height: cardHeight, borderRadius: radius }}
+            style={{
+              width: dimensions.cardWidth,
+              height: dimensions.cardHeight,
+              borderRadius: radius
+            }}
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${count}`}
             aria-hidden={active !== i}
             onClick={() => onCardClick(i)}
           >
             <img
-              className="block h-full w-full select-none object-cover [pointer-events:none] [-webkit-user-drag:none]"
+              className="block h-full w-full select-none object-cover [pointer-events:none] [-webkit-user-drag:none] transition-transform duration-300 group-hover:scale-[1.02]"
               src={item.image}
               alt={item.alt || ''}
               draggable={false}
@@ -386,6 +479,32 @@ const DepthCarousel = ({
               }}
               style={{ background: tint }}
             />
+
+            {/* Fullscreen Expand Icon Badge */}
+            <div className="absolute top-2.5 right-2.5 z-20 pointer-events-none">
+              <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[11px] font-sans font-medium border border-white/20 shadow-md">
+                <svg className="w-3 h-3 text-[#a3f036]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h6v6" />
+                  <path d="M9 21H3v-6" />
+                  <path d="M21 3l-7 7" />
+                  <path d="M3 21l7-7" />
+                </svg>
+                <span className="hidden xs:inline">Fullscreen</span>
+              </span>
+            </div>
+
+            {/* Desktop Hover Expand Overlay */}
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:flex items-center justify-center pointer-events-none z-10">
+              <span className="px-4 py-2 rounded-full bg-black/85 backdrop-blur-md text-white text-xs font-sans font-semibold border border-white/20 flex items-center gap-2 shadow-xl scale-90 group-hover:scale-100 transition-transform">
+                <svg className="w-4 h-4 text-[#a3f036]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h6v6" />
+                  <path d="M9 21H3v-6" />
+                  <path d="M21 3l-7 7" />
+                  <path d="M3 21l7-7" />
+                </svg>
+                <span>View Fullscreen</span>
+              </span>
+            </div>
           </div>
         ))}
       </div>
@@ -394,11 +513,11 @@ const DepthCarousel = ({
         <>
           <button
             type="button"
-            className="absolute left-4 top-1/2 z-[3000] grid h-[42px] w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/70 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+            className="absolute left-1.5 sm:left-4 top-1/2 z-[3000] grid h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/75 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
             aria-label="Previous slide"
             onClick={() => navigateBy(-1)}
           >
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path
                 d="M15 5l-7 7 7 7"
                 fill="none"
@@ -411,11 +530,11 @@ const DepthCarousel = ({
           </button>
           <button
             type="button"
-            className="absolute right-4 top-1/2 z-[3000] grid h-[42px] w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/70 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+            className="absolute right-1.5 sm:right-4 top-1/2 z-[3000] grid h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/75 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
             aria-label="Next slide"
             onClick={() => navigateBy(1)}
           >
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path
                 d="M9 5l7 7-7 7"
                 fill="none"
@@ -429,9 +548,21 @@ const DepthCarousel = ({
         </>
       )}
 
+      {/* Active Design Title & Category Caption */}
+      {data[active] && (
+        <div className="absolute bottom-10 sm:bottom-14 left-1/2 -translate-x-1/2 z-[3000] text-center pointer-events-none w-full px-4 max-w-[340px] sm:max-w-md transition-all duration-200">
+          <p className="text-neutral-900 font-clash font-bold text-sm sm:text-base tracking-tight truncate drop-shadow-sm">
+            {data[active].title || data[active].alt}
+          </p>
+          <p className="text-neutral-500 font-sans text-[11px] sm:text-xs truncate mt-0.5">
+            {data[active].category || 'Tap poster to elaborate fullscreen'}
+          </p>
+        </div>
+      )}
+
       {showIndicators && count > 1 && (
         <div
-          className="absolute bottom-4 left-1/2 z-[3000] flex -translate-x-1/2 gap-2 rounded-full bg-black/40 px-3.5 py-2 backdrop-blur-md border border-white/10"
+          className="absolute bottom-2 sm:bottom-4 left-1/2 z-[3000] flex -translate-x-1/2 gap-2 rounded-full bg-black/50 px-3.5 py-1.5 backdrop-blur-md border border-white/10 shadow-lg"
           role="tablist"
           aria-label="Slides"
         >
@@ -442,8 +573,8 @@ const DepthCarousel = ({
               role="tab"
               aria-selected={active === i}
               aria-label={`Go to slide ${i + 1}`}
-              className={`h-[7px] cursor-pointer rounded-full transition-all duration-[250ms] ${
-                active === i ? 'w-6 bg-[#a3f036]' : 'w-[7px] bg-white/40 hover:bg-white/70'
+              className={`h-[6px] cursor-pointer rounded-full transition-all duration-[250ms] ${
+                active === i ? 'w-6 bg-[#a3f036]' : 'w-[6px] bg-white/40 hover:bg-white/70'
               }`}
               onClick={() => setFocus(i, true)}
             />

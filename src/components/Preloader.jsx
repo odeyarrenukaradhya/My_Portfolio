@@ -54,6 +54,102 @@ const COMPONENT_STATES = [
   }
 ];
 
+const FLOATING_ICONS = [
+  {
+    id: 'vector',
+    icon: (
+      <svg className="w-3.5 h-3.5 text-neutral-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+      </svg>
+    ),
+    label: 'Vector & UI',
+    className: 'top-[14%] left-[4%] sm:left-[8%]',
+    delay: 0,
+    duration: 5.5,
+    yRange: [-10, 10],
+    xRange: [-6, 6],
+    rotRange: [-4, 6]
+  },
+  {
+    id: 'tokens',
+    icon: (
+      <span className="flex items-center gap-1">
+        <span className="w-2 h-2 rounded-full bg-[#82cf17]" />
+        <span className="w-2 h-2 rounded-full bg-neutral-900" />
+      </span>
+    ),
+    label: 'Tokens / HSL',
+    className: 'top-[15%] right-[4%] sm:right-[9%]',
+    delay: 0.4,
+    duration: 6.2,
+    yRange: [8, -12],
+    xRange: [5, -5],
+    rotRange: [5, -3]
+  },
+  {
+    id: 'code',
+    icon: (
+      <svg className="w-3.5 h-3.5 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+    label: 'React & GSAP',
+    className: 'top-[44%] left-[3%] sm:left-[6%]',
+    delay: 0.8,
+    duration: 5.8,
+    yRange: [-14, 8],
+    xRange: [-5, 7],
+    rotRange: [4, -5]
+  },
+  {
+    id: 'grid',
+    icon: (
+      <svg className="w-3.5 h-3.5 text-neutral-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="14" y="14" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+      </svg>
+    ),
+    label: 'Auto-Layout 8px',
+    className: 'top-[46%] right-[3%] sm:right-[7%]',
+    delay: 0.3,
+    duration: 6.5,
+    yRange: [12, -10],
+    xRange: [-6, 6],
+    rotRange: [-5, 4]
+  },
+  {
+    id: 'sparkles',
+    icon: (
+      <span className="text-[#82cf17] text-xs font-bold">✦</span>
+    ),
+    label: 'Micro-interactions',
+    className: 'bottom-[16%] left-[4%] sm:left-[10%]',
+    delay: 0.6,
+    duration: 5.2,
+    yRange: [-8, 12],
+    xRange: [6, -4],
+    rotRange: [-3, 5]
+  },
+  {
+    id: 'type',
+    icon: (
+      <span className="text-neutral-900 font-extrabold text-xs font-mono">Aa</span>
+    ),
+    label: 'Söhne / 60fps',
+    className: 'bottom-[17%] right-[4%] sm:right-[11%]',
+    delay: 1.0,
+    duration: 6.0,
+    yRange: [10, -12],
+    xRange: [-5, 5],
+    rotRange: [6, -4]
+  }
+];
+
 export default function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
@@ -108,6 +204,34 @@ export default function Preloader({ onComplete }) {
         >
           {/* Subtle Studio Radial Background Accent */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[400px] bg-[#a3f036]/20 blur-[140px] rounded-full pointer-events-none" />
+
+          {/* Ambient Floating Design Badges / Icons */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+            {FLOATING_ICONS.map((item) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: [0.75, 0.95, 0.75],
+                  y: [item.yRange[0], item.yRange[1], item.yRange[0]],
+                  x: [item.xRange[0], item.xRange[1], item.xRange[0]],
+                  rotate: [item.rotRange[0], item.rotRange[1], item.rotRange[0]],
+                }}
+                exit={{ opacity: 0, scale: 0.7, y: -20 }}
+                transition={{
+                  opacity: { duration: item.duration, repeat: Infinity, ease: 'easeInOut' },
+                  y: { duration: item.duration, repeat: Infinity, ease: 'easeInOut' },
+                  x: { duration: item.duration * 1.2, repeat: Infinity, ease: 'easeInOut' },
+                  rotate: { duration: item.duration * 1.4, repeat: Infinity, ease: 'easeInOut' },
+                  delay: item.delay,
+                }}
+                className={`absolute ${item.className} flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl bg-white/80 backdrop-blur-md border border-neutral-300/70 shadow-[0_10px_25px_rgba(0,0,0,0.06)] text-neutral-800 text-[10px] sm:text-xs font-mono font-medium scale-85 sm:scale-100 transition-transform`}
+              >
+                <span className="flex items-center justify-center">{item.icon}</span>
+                <span className="tracking-tight">{item.label}</span>
+              </motion.div>
+            ))}
+          </div>
 
           {/* TOP BAR */}
           <div className="relative z-10 flex items-center justify-between border-b border-neutral-300/70 pb-4 text-xs font-mono text-neutral-500">

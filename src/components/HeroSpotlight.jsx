@@ -30,21 +30,22 @@ export default function HeroSpotlight({ imageSrc, alt = "Renukaradhya Odeyar" })
   };
 
   return (
-    <div className="relative flex justify-center items-end w-full select-none z-30">
+    <div className="relative flex justify-center items-end w-full select-none z-20 md:z-30">
       <div
         ref={wrapperRef}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchMove}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseLeave}
-        className="relative inline-block cursor-crosshair overflow-hidden"
+        className="relative inline-block cursor-crosshair overflow-hidden touch-none"
       >
-        {/* Layer 1: Base Black and White Grayscale Image - Uncropped / Fuller height */}
+        {/* Layer 1: Base Black and White Grayscale Image */}
         <img
           src={imageSrc}
           alt={alt}
-          className="block w-[240px] sm:w-[310px] md:w-[370px] lg:w-[410px] h-[290px] sm:h-[360px] md:h-[410px] lg:h-[450px] object-cover object-top filter grayscale contrast-[1.15] brightness-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.18)] pointer-events-auto"
+          className="block w-[260px] xs:w-[295px] sm:w-[350px] md:w-[370px] lg:w-[410px] h-[305px] xs:h-[350px] sm:h-[395px] md:h-[410px] lg:h-[450px] object-cover object-top filter grayscale contrast-[1.15] brightness-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.18)] pointer-events-auto"
         />
 
         {/* Layer 2: Full Color Image revealed ONLY inside cursor pointer radius */}
@@ -64,7 +65,7 @@ export default function HeroSpotlight({ imageSrc, alt = "Renukaradhya Odeyar" })
           <img
             src={imageSrc}
             alt={`${alt} - Color`}
-            className="block w-[240px] sm:w-[310px] md:w-[370px] lg:w-[410px] h-[290px] sm:h-[360px] md:h-[410px] lg:h-[450px] object-cover object-top filter brightness-[1.05] saturate-[1.25] drop-shadow-[0_15px_30px_rgba(0,0,0,0.18)]"
+            className="block w-[260px] xs:w-[295px] sm:w-[350px] md:w-[370px] lg:w-[410px] h-[305px] xs:h-[350px] sm:h-[395px] md:h-[410px] lg:h-[450px] object-cover object-top filter brightness-[1.05] saturate-[1.25] drop-shadow-[0_15px_30px_rgba(0,0,0,0.18)]"
           />
         </div>
       </div>

@@ -46,8 +46,8 @@ export default function Navbar({ onNavigate, activeHref = '#home' }) {
         </span>
       </motion.div>
 
-      {/* Center React Bits PillNav with GSAP Circle Liquid Hover Animation */}
-      <div className="flex-1 flex justify-center z-50">
+      {/* Center React Bits PillNav with GSAP Circle Liquid Hover Animation (Desktop Only) */}
+      <div className="hidden md:flex flex-1 justify-center z-50">
         <PillNav
           items={navItems}
           activeHref={activeHref}
