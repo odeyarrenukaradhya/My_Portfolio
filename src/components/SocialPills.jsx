@@ -52,21 +52,21 @@ export default function SocialPills() {
   ];
 
   return (
-    <div className="flex flex-col gap-2.5 z-20 items-end">
+    <div className="flex flex-row md:flex-col flex-nowrap sm:flex-wrap gap-1 xs:gap-1.5 md:gap-2.5 z-20 items-center justify-center md:items-end w-full md:w-auto">
       {socials.map((social, index) => (
         <motion.a
           key={social.name}
           href={social.url}
           target="_blank"
           rel="noopener noreferrer"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.3 + index * 0.08 }}
-          whileHover={{ x: -4, scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="bg-white border border-neutral-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-neutral-300 rounded-full px-4 sm:px-5 py-2 flex items-center gap-2.5 text-neutral-900 font-sans text-xs sm:text-sm font-medium transition-all duration-300 w-fit cursor-pointer group"
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          className="bg-white/95 backdrop-blur-sm border border-neutral-200/90 shadow-[0_2px_6px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-neutral-300 rounded-full px-2 xs:px-2.5 sm:px-4 md:px-5 py-1 sm:py-1.5 md:py-2 flex items-center gap-1 xs:gap-1.5 sm:gap-2 text-neutral-900 font-sans text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-medium transition-all duration-300 w-fit cursor-pointer group flex-shrink-0"
         >
-          <span className="transition-transform duration-300 group-hover:scale-110">
+          <span className="transition-transform duration-300 group-hover:scale-110 text-neutral-800 scale-90 xs:scale-100">
             {social.icon}
           </span>
           <span>{social.name}</span>

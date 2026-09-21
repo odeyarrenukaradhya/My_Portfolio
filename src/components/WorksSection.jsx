@@ -82,8 +82,8 @@ export default function WorksSection({ projects = [], onSelectProject, onViewAll
     <div className="w-full max-w-[1280px] h-full max-h-[93vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-5 md:p-6 relative overflow-hidden flex flex-col justify-between">
       
       {/* Top Header - Fixed at Top */}
-      <div className="flex items-center justify-between pb-1 pt-1 z-20 flex-shrink-0">
-        <div>
+      <div className="flex items-center justify-between pb-1 pt-1 z-20 flex-shrink-0 gap-2">
+        <div className="flex-1 min-w-0 pr-2">
           <div className="flex items-center gap-2">
             <h2 className="font-serif font-black text-2xl sm:text-4xl md:text-5xl text-neutral-900 tracking-tight drop-shadow-sm uppercase">
               WORKS
@@ -93,20 +93,20 @@ export default function WorksSection({ projects = [], onSelectProject, onViewAll
               Scroll Showcase
             </span>
           </div>
-          <p className="font-serif italic text-neutral-600 text-xs sm:text-sm mt-0.5">
+          <p className="font-serif italic text-neutral-600 text-[11px] sm:text-sm mt-0.5 truncate sm:whitespace-normal">
             A glimpse into the work i've created — scroll to explore
           </p>
         </div>
 
-        {/* Top Right View All Button */}
+        {/* Top Right View All Button - Compact & Single-line on Mobile */}
         <motion.button
           onClick={onViewAll}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] px-5 sm:px-6 py-2 rounded-full font-serif font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 flex items-center gap-1.5 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000000]"
+          className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border border-black sm:border-2 shadow-[2px_2px_0px_0px_#000000] sm:shadow-[3px_3px_0px_0px_#000000] px-2.5 xs:px-3 sm:px-5 py-1 sm:py-2 rounded-full font-sans font-bold text-[10px] xs:text-[11px] sm:text-xs uppercase tracking-wider transition-all duration-200 flex items-center gap-1 sm:gap-1.5 cursor-pointer whitespace-nowrap flex-shrink-0 active:translate-x-0.5 active:translate-y-0.5"
         >
           <span>View All</span>
-          <ArrowUpRight className="w-4 h-4 stroke-[3]" />
+          <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.5]" />
         </motion.button>
       </div>
 
