@@ -52,7 +52,7 @@ export default function SocialPills() {
   ];
 
   return (
-    <div className="flex flex-row md:flex-col flex-nowrap sm:flex-wrap gap-1 xs:gap-1.5 md:gap-2.5 z-20 items-center justify-center md:items-end w-full md:w-auto">
+    <div className="flex flex-row md:flex-col flex-wrap gap-1 xs:gap-1.5 md:gap-2.5 z-20 items-center justify-center md:items-end w-full md:w-auto">
       {socials.map((social, index) => (
         <motion.a
           key={social.name}

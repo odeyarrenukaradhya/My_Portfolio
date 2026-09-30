@@ -80,16 +80,16 @@ export default function AboutSection() {
   };
 
   return (
-    <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-[1280px] min-h-[calc(100dvh-85px)] md:min-h-0 md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
       
       {/* Top Header & Tab Controls */}
-      <div className="w-full flex flex-col items-center pt-1 sm:pt-2 pb-2 sm:pb-3 z-10">
-        <h2 className="font-serif font-bold text-2xl sm:text-5xl md:text-6xl text-neutral-900 tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)] text-center">
+      <div className="w-full flex flex-col items-center pt-1 sm:pt-2 pb-2 sm:pb-3 z-10 flex-shrink-0">
+        <h2 className="font-serif font-bold text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-neutral-900 tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)] text-center">
           About Me
         </h2>
 
         {/* Interactive Tab Switcher */}
-        <div className="flex flex-nowrap sm:flex-wrap items-center justify-start sm:justify-center gap-1 sm:gap-2 mt-2 sm:mt-3 bg-neutral-100/90 p-1 sm:p-1.5 rounded-full border border-neutral-200 shadow-inner max-w-full overflow-x-auto scrollbar-none w-full sm:w-auto">
+        <div className="flex flex-nowrap sm:flex-wrap items-center justify-start sm:justify-center gap-1 sm:gap-2 mt-2 sm:mt-3 bg-neutral-100/90 p-1 sm:p-1.5 rounded-full border border-neutral-200 shadow-inner max-w-full overflow-x-auto scrollbar-none w-full sm:w-auto px-1.5">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -126,7 +126,7 @@ export default function AboutSection() {
           transform: `perspective(1000px) rotateX(${-mousePos.y}deg) rotateY(${mousePos.x}deg)`,
           transition: 'transform 0.15s ease-out'
         }}
-        className="bg-[#e4e6ea] rounded-[24px] sm:rounded-[32px] border border-neutral-300/70 p-4 sm:p-6 md:p-7 shadow-inner w-full max-w-5xl mx-auto my-auto relative overflow-hidden flex flex-col md:flex-row items-center md:items-stretch justify-between gap-5 sm:gap-7"
+        className="bg-[#e4e6ea] rounded-[24px] sm:rounded-[32px] border border-neutral-300/70 p-3.5 sm:p-6 md:p-7 shadow-inner w-full max-w-5xl mx-auto my-auto relative overflow-hidden flex flex-col md:flex-row items-center md:items-stretch justify-between gap-3.5 sm:gap-7"
       >
         {/* Interactive Left Cutout Portrait */}
         <div className="w-full md:w-[230px] lg:w-[260px] flex-shrink-0 flex flex-col items-center justify-end z-10 group">
@@ -134,13 +134,13 @@ export default function AboutSection() {
             <img
               src="/hero/hero-3.png"
               alt="Renukaradhya Odeyar Portrait"
-              className="w-[160px] sm:w-[190px] md:w-[230px] lg:w-[250px] h-auto object-cover object-top filter grayscale group-hover:grayscale-0 contrast-110 transition-all duration-500 transform group-hover:scale-105"
+              className="w-[125px] xs:w-[150px] sm:w-[190px] md:w-[230px] lg:w-[250px] h-auto object-cover object-top filter grayscale group-hover:grayscale-0 contrast-110 transition-all duration-500 transform group-hover:scale-105"
             />
           </div>
         </div>
 
         {/* Right Dynamic Content Pane */}
-        <div className="flex-1 flex flex-col justify-between text-center md:text-left z-20 w-full max-w-xl mx-auto py-1">
+        <div className="flex-1 flex flex-col justify-between text-center md:text-left z-20 w-full max-w-xl mx-auto py-0.5 sm:py-1">
           
           <AnimatePresence mode="wait">
             {/* TAB 1: OVERVIEW */}
@@ -154,38 +154,40 @@ export default function AboutSection() {
                 className="flex flex-col justify-between h-full"
               >
                 <div>
-                  <p className="font-serif text-neutral-800 text-xs sm:text-sm md:text-base leading-relaxed font-normal">
+                  <p className="font-serif text-neutral-800 text-[11.5px] xs:text-xs sm:text-sm md:text-base leading-relaxed font-normal">
                     I have worked on SaaS platforms, business websites, and digital products, helping transform ideas into intuitive and user-friendly experiences. My approach combines design thinking, usability, and problem-solving to create meaningful solutions.
                   </p>
 
-                  <p className="font-serif font-bold text-neutral-900 text-xs sm:text-sm md:text-base mt-2.5 sm:mt-3">
+                  <p className="font-serif font-bold text-neutral-900 text-xs sm:text-sm md:text-base mt-2 sm:mt-3">
                     UI/UX Designer • Product Designer • Frontend Designer
                   </p>
                 </div>
 
-                {/* Interactive Stats Box with Hover Tooltips */}
-                <div className="bg-white rounded-[20px] sm:rounded-[24px] p-3 sm:p-4 border border-neutral-200/90 shadow-[0_10px_25px_rgba(0,0,0,0.07)] grid grid-cols-3 divide-x divide-neutral-200 mt-3 sm:mt-5 w-full">
+                {/* Interactive Stats Box with Tap/Hover Tooltips */}
+                <div className="bg-white rounded-[20px] sm:rounded-[24px] p-2.5 sm:p-4 border border-neutral-200/90 shadow-[0_10px_25px_rgba(0,0,0,0.07)] grid grid-cols-3 divide-x divide-neutral-200 mt-2.5 sm:mt-5 w-full">
                   {stats.map((stat) => (
                     <motion.div
                       key={stat.id}
+                      onClick={() => setHoveredStat(hoveredStat === stat.id ? null : stat.id)}
                       onMouseEnter={() => setHoveredStat(stat.id)}
                       onMouseLeave={() => setHoveredStat(null)}
                       whileHover={{ scale: 1.04 }}
-                      className="px-2 flex flex-col items-center justify-center cursor-pointer relative group"
+                      whileTap={{ scale: 0.96 }}
+                      className="px-1.5 xs:px-2 flex flex-col items-center justify-center cursor-pointer relative group select-none"
                     >
-                      <span className="font-serif font-extrabold text-2xl sm:text-3xl md:text-4xl text-neutral-900 leading-none group-hover:text-[#456b10] transition-colors">
+                      <span className="font-serif font-extrabold text-xl xs:text-2xl sm:text-3xl md:text-4xl text-neutral-900 leading-none group-hover:text-[#456b10] transition-colors">
                         {stat.value}
                       </span>
-                      <span className="font-serif text-[10px] sm:text-[11px] font-bold text-neutral-800 tracking-wide uppercase mt-1.5 text-center leading-tight">
+                      <span className="font-serif text-[9.5px] xs:text-[10px] sm:text-[11px] font-bold text-neutral-800 tracking-wide uppercase mt-1 xs:mt-1.5 text-center leading-tight">
                         {stat.label.split(' ')[0]}<br />{stat.label.split(' ').slice(1).join(' ')}
                       </span>
 
-                      {/* Interactive Hover Tooltip */}
+                      {/* Interactive Tap/Hover Tooltip */}
                       {hoveredStat === stat.id && (
                         <motion.div
                           initial={{ opacity: 0, y: 5 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="absolute bottom-full mb-2 bg-neutral-900 text-white text-[11px] p-2 rounded-xl shadow-xl border border-neutral-700 w-48 text-center pointer-events-none z-50 font-sans"
+                          className="absolute bottom-full mb-2 bg-neutral-900 text-white text-[10.5px] xs:text-[11px] p-2 rounded-xl shadow-xl border border-neutral-700 w-44 xs:w-48 text-center pointer-events-none z-50 font-sans"
                         >
                           {stat.details}
                         </motion.div>
@@ -309,13 +311,13 @@ export default function AboutSection() {
           </AnimatePresence>
 
           {/* Bottom Action Pill Buttons Row */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-4 sm:mt-5 pt-2 border-t border-neutral-300/50">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 xs:gap-2.5 sm:gap-3 mt-3 sm:mt-5 pt-2 border-t border-neutral-300/50">
             {/* Resume Button */}
             <motion.button
               onClick={() => setIsResumeOpen(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] px-5 sm:px-6 py-2 rounded-full font-serif font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000000]"
+              className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000000] sm:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[5px_5px_0px_0px_#000000] px-3.5 xs:px-4.5 sm:px-6 py-1.5 xs:py-2 rounded-full font-serif font-extrabold text-[11px] xs:text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#000000]"
             >
               <span>Resume</span>
               <Download className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -326,7 +328,7 @@ export default function AboutSection() {
               href="#works"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] px-5 sm:px-6 py-2 rounded-full font-serif font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000000]"
+              className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000000] sm:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[5px_5px_0px_0px_#000000] px-3.5 xs:px-4.5 sm:px-6 py-1.5 xs:py-2 rounded-full font-serif font-extrabold text-[11px] xs:text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#000000]"
             >
               <span>Case Studies</span>
               <Menu className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -339,7 +341,7 @@ export default function AboutSection() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] px-5 sm:px-6 py-2 rounded-full font-serif font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000000]"
+              className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000000] sm:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[5px_5px_0px_0px_#000000] px-3.5 xs:px-4.5 sm:px-6 py-1.5 xs:py-2 rounded-full font-serif font-extrabold text-[11px] xs:text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#000000]"
             >
               <span>LinkedIn</span>
               <Linkedin className="w-3.5 h-3.5 stroke-[2.5]" />

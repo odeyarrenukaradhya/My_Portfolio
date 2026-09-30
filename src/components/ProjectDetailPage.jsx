@@ -14,28 +14,28 @@ export default function ProjectDetailPage({ project, onBack, onNextProject, onPr
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 15 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-[1240px] h-full max-h-[92vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-4 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between my-auto"
+      className="w-full max-w-[1240px] min-h-[calc(100dvh-85px)] md:min-h-0 md:h-full md:max-h-[92vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-3.5 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between my-auto"
     >
       {/* Top Back Navigation Bar */}
-      <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-neutral-100 z-10 flex-shrink-0">
+      <div className="flex items-center justify-between pb-2.5 sm:pb-4 border-b border-neutral-100 z-10 flex-shrink-0">
         <button
           onClick={onBack}
-          className="font-serif font-bold text-neutral-700 hover:text-black flex items-center gap-2 text-sm sm:text-base cursor-pointer transition-colors group"
+          className="font-serif font-bold text-neutral-700 hover:text-black flex items-center gap-1.5 sm:gap-2 text-xs sm:text-base cursor-pointer transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           <span>Back to Works</span>
         </button>
 
         {onNextProject && (
-          <div className="flex items-center gap-3 font-serif text-xs sm:text-sm text-neutral-500">
+          <div className="flex items-center gap-2 sm:gap-3 font-serif text-[11px] sm:text-sm text-neutral-500">
             {onPrevProject && (
               <button onClick={onPrevProject} className="hover:text-black transition-colors cursor-pointer">
-                ← Previous
+                ← Prev
               </button>
             )}
             <span>|</span>
             <button onClick={onNextProject} className="hover:text-black transition-colors cursor-pointer font-bold flex items-center gap-1">
-              <span>Next Project</span>
+              <span>Next</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -43,34 +43,34 @@ export default function ProjectDetailPage({ project, onBack, onNextProject, onPr
       </div>
 
       {/* Main Scrollable Case Study Container */}
-      <div className="w-full flex-1 overflow-y-auto my-3 sm:my-4 pr-1 sm:pr-3 space-y-10 sm:space-y-14 scroll-smooth">
+      <div className="w-full flex-1 overflow-y-auto my-2 sm:my-4 pr-1 sm:pr-3 space-y-6 sm:space-y-14 scroll-smooth [-webkit-overflow-scrolling:touch]">
         
         {/* SECTION 1: HERO & MAIN OVERVIEW */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center pt-2">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center pt-1 sm:pt-2">
           {/* Left Info Block */}
           <div className="lg:col-span-6 flex flex-col justify-center">
-            <span className="text-xs font-serif italic text-amber-600 uppercase tracking-widest font-bold mb-1">
+            <span className="text-[11px] sm:text-xs font-serif italic text-amber-600 uppercase tracking-widest font-bold mb-1">
               Detailed Case Study
             </span>
             
-            <h1 className="font-serif font-black text-3xl sm:text-5xl lg:text-6xl text-neutral-900 tracking-tight uppercase drop-shadow-sm leading-tight">
+            <h1 className="font-serif font-black text-2xl xs:text-3xl sm:text-5xl lg:text-6xl text-neutral-900 tracking-tight uppercase drop-shadow-sm leading-tight">
               {project.title}
             </h1>
 
-            <h2 className="font-serif font-bold text-neutral-900 text-base sm:text-xl mt-3 leading-snug">
+            <h2 className="font-serif font-bold text-neutral-900 text-sm sm:text-xl mt-2 sm:mt-3 leading-snug">
               {project.heading || project.subtitle}
             </h2>
 
-            <p className="font-serif text-neutral-700 text-xs sm:text-sm md:text-base mt-3 leading-relaxed">
+            <p className="font-serif text-neutral-700 text-xs sm:text-sm md:text-base mt-2 sm:mt-3 leading-relaxed">
               {project.description}
             </p>
 
             {/* Category Tags */}
-            <div className="flex flex-wrap items-center gap-2 mt-5">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-4 sm:mt-5">
               {project.tagPills?.map((tag) => (
                 <span
                   key={tag}
-                  className="border border-neutral-800 rounded-lg px-3 py-1 text-xs font-serif font-bold uppercase tracking-wide text-neutral-900 bg-white shadow-xs"
+                  className="border border-neutral-800 rounded-lg px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-serif font-bold uppercase tracking-wide text-neutral-900 bg-white shadow-xs"
                 >
                   {tag}
                 </span>
@@ -78,7 +78,7 @@ export default function ProjectDetailPage({ project, onBack, onNextProject, onPr
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 mt-6">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 mt-5 sm:mt-6">
               {/* LIVE Button */}
               <motion.a
                 href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : '#'}
@@ -92,7 +92,7 @@ export default function ProjectDetailPage({ project, onBack, onNextProject, onPr
                 }}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="bg-black hover:bg-neutral-800 text-white px-6 py-2.5 rounded-full font-serif font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer inline-flex items-center justify-center"
+                className="bg-black hover:bg-neutral-800 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-serif font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer inline-flex items-center justify-center"
               >
                 LIVE DEMO
               </motion.a>
@@ -102,10 +102,10 @@ export default function ProjectDetailPage({ project, onBack, onNextProject, onPr
                 href={project.caseStudyUrl || '#'}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] px-6 py-2.5 rounded-full font-serif font-extrabold text-xs uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000000]"
+                className="bg-[#a3f036] hover:bg-[#b5ff47] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000000] sm:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[5px_5px_0px_0px_#000000] px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-serif font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-1.5 sm:gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_#000000]"
               >
                 <span>VIEW CASE STUDY</span>
-                <ArrowUpRight className="w-4 h-4 stroke-[3]" />
+                <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[3]" />
               </motion.a>
             </div>
 

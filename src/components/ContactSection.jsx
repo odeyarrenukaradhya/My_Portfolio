@@ -23,56 +23,56 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-5 md:p-6 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-[1280px] min-h-[calc(100dvh-85px)] md:min-h-0 md:h-full md:max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3.5 sm:p-5 md:p-6 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
       
       {/* Content Grid */}
-      <div className="w-full h-full flex flex-col lg:flex-row items-stretch justify-between gap-4 sm:gap-6 overflow-y-auto lg:overflow-hidden">
+      <div className="w-full flex flex-col lg:flex-row items-stretch justify-between gap-4 sm:gap-6 lg:overflow-hidden my-auto">
         
         {/* LEFT COLUMN: Contact Info & Socials */}
         <div className="w-full lg:w-5/12 flex flex-col justify-between p-2 sm:p-4">
           
           <div>
             {/* Top Branding / Logo */}
-            <div className="flex items-center gap-2.5 mb-5 sm:mb-7">
+            <div className="flex items-center gap-2.5 mb-4 sm:mb-7">
               <div className="w-8 h-8 rounded-xl bg-neutral-900 flex items-center justify-center text-white font-clash font-extrabold text-sm shadow-sm">
                 RO
               </div>
-              <span className="font-clash font-bold text-lg text-neutral-900 tracking-tight">
+              <span className="font-clash font-bold text-base sm:text-lg text-neutral-900 tracking-tight">
                 Renukaradhya Odeyar
               </span>
             </div>
 
             {/* Info Stack */}
-            <div className="space-y-5 sm:space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               
               {/* Direct Email */}
-              <div className="flex items-start gap-3.5 group">
+              <div className="flex items-start gap-3 sm:gap-3.5 group">
                 <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 flex-shrink-0 group-hover:bg-neutral-900 group-hover:text-white transition-colors duration-300">
                   <Mail className="w-4 h-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="font-sans font-bold text-neutral-900 text-sm sm:text-base leading-tight">
+                  <h4 className="font-sans font-bold text-neutral-900 text-xs sm:text-base leading-tight">
                     Direct Email
                   </h4>
-                  <p className="font-sans text-neutral-500 text-xs mt-0.5">
+                  <p className="font-sans text-neutral-500 text-[11px] sm:text-xs mt-0.5">
                     Feel free to reach out for inquiries or design projects.
                   </p>
-                  <a href="mailto:odeyarrenukaradhya@gmail.com" className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 inline-block hover:underline">
+                  <a href="mailto:odeyarrenukaradhya@gmail.com" className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 inline-block hover:underline break-all">
                     odeyarrenukaradhya@gmail.com
                   </a>
                 </div>
               </div>
 
               {/* Location */}
-              <div className="flex items-start gap-3.5 group">
+              <div className="flex items-start gap-3 sm:gap-3.5 group">
                 <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 flex-shrink-0 group-hover:bg-neutral-900 group-hover:text-white transition-colors duration-300">
                   <MapPin className="w-4 h-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="font-sans font-bold text-neutral-900 text-sm sm:text-base leading-tight">
+                  <h4 className="font-sans font-bold text-neutral-900 text-xs sm:text-base leading-tight">
                     Location
                   </h4>
-                  <p className="font-sans text-neutral-500 text-xs mt-0.5">
+                  <p className="font-sans text-neutral-500 text-[11px] sm:text-xs mt-0.5">
                     Based in India — available for global opportunities.
                   </p>
                   <p className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 leading-snug">
@@ -82,15 +82,15 @@ export default function ContactSection() {
               </div>
 
               {/* Phone / WhatsApp */}
-              <div className="flex items-start gap-3.5 group">
+              <div className="flex items-start gap-3 sm:gap-3.5 group">
                 <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 flex-shrink-0 group-hover:bg-neutral-900 group-hover:text-white transition-colors duration-300">
                   <Phone className="w-4 h-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="font-sans font-bold text-neutral-900 text-sm sm:text-base leading-tight">
+                  <h4 className="font-sans font-bold text-neutral-900 text-xs sm:text-base leading-tight">
                     Phone / WhatsApp
                   </h4>
-                  <p className="font-sans text-neutral-500 text-xs mt-0.5">
+                  <p className="font-sans text-neutral-500 text-[11px] sm:text-xs mt-0.5">
                     Available Mon–Fri, 9:00 AM – 6:00 PM IST.
                   </p>
                   <a href="tel:+917795561563" className="font-sans font-semibold text-neutral-900 text-xs sm:text-sm mt-0.5 inline-block hover:underline">
@@ -103,17 +103,17 @@ export default function ContactSection() {
           </div>
 
           {/* Bottom Social Icons Row */}
-          <div className="pt-5 sm:pt-6 flex items-center gap-2.5">
-            <a href="https://dribbble.com/renukaradhya-odeyar" target="_blank" rel="noopener noreferrer" aria-label="Dribbble" className="w-9 h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
+          <div className="pt-4 sm:pt-6 flex items-center gap-2.5">
+            <a href="https://dribbble.com/renukaradhya-odeyar" target="_blank" rel="noopener noreferrer" aria-label="Dribbble" className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
               <Dribbble className="w-4 h-4" />
             </a>
-            <a href="https://www.instagram.com/renukaradhyaodeyar/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
+            <a href="https://www.instagram.com/renukaradhyaodeyar/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
               <Instagram className="w-4 h-4" />
             </a>
-            <a href="https://www.linkedin.com/in/renukaradhyaodeyar/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-9 h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
+            <a href="https://www.linkedin.com/in/renukaradhyaodeyar/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
               <Linkedin className="w-4 h-4" />
             </a>
-            <a href="https://www.behance.net/renukarodeyar" target="_blank" rel="noopener noreferrer" aria-label="Behance" className="w-9 h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
+            <a href="https://www.behance.net/renukarodeyar" target="_blank" rel="noopener noreferrer" aria-label="Behance" className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-200">
               <BehanceIcon className="w-4 h-4" />
             </a>
           </div>
@@ -121,10 +121,10 @@ export default function ContactSection() {
         </div>
 
         {/* RIGHT COLUMN: Professional Contact Form Card */}
-        <div className="w-full lg:w-7/12 bg-[#a3f036] rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 md:p-7 flex flex-col justify-between text-neutral-900 shadow-md overflow-y-auto max-h-full">
+        <div className="w-full lg:w-7/12 bg-[#a3f036] rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 md:p-7 flex flex-col justify-between text-neutral-900 shadow-md">
           
           <div>
-            <h2 className="font-sans font-extrabold text-xl sm:text-3xl md:text-4xl leading-tight text-neutral-950 tracking-tight">
+            <h2 className="font-sans font-extrabold text-lg xs:text-xl sm:text-3xl md:text-4xl leading-tight text-neutral-950 tracking-tight">
               Have a product vision?<br className="hidden sm:inline" /> Let’s build it together.
             </h2>
             
@@ -142,7 +142,7 @@ export default function ContactSection() {
                   placeholder="Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-xs sm:text-sm placeholder:text-neutral-700 outline-none transition-colors"
+                  className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-base sm:text-sm placeholder:text-neutral-700 outline-none transition-colors"
                 />
               </div>
 
@@ -154,7 +154,7 @@ export default function ContactSection() {
                   placeholder="your.email@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-xs sm:text-sm placeholder:text-neutral-700 outline-none transition-colors"
+                  className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-base sm:text-sm placeholder:text-neutral-700 outline-none transition-colors"
                 />
               </div>
 
@@ -166,7 +166,7 @@ export default function ContactSection() {
                   placeholder="Tell me about your product, project scope, or opportunity..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-xs sm:text-sm placeholder:text-neutral-700 outline-none resize-none transition-colors"
+                  className="w-full bg-transparent border-b-2 border-neutral-900/60 focus:border-neutral-950 py-1.5 px-0 text-neutral-950 font-sans font-medium text-base sm:text-sm placeholder:text-neutral-700 outline-none resize-none transition-colors"
                 />
               </div>
 
