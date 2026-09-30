@@ -78,20 +78,30 @@ const DepthCarousel = ({
   const [dimensions, setDimensions] = useState(() => {
     const isClient = typeof window !== 'undefined';
     const isMobile = isClient ? window.innerWidth < 640 : false;
+    const isTablet = isClient ? window.innerWidth >= 640 && window.innerWidth < 1024 : false;
     const w = isClient ? window.innerWidth : 1200;
     if (isMobile) {
-      const targetW = Math.min(Math.max(Math.round(w - 24), 295), 360);
+      const targetW = Math.min(Math.max(Math.round(w - 28), 280), 340);
       return {
         cardWidth: targetW,
-        cardHeight: Math.min(Math.round(targetW * 0.85), 310),
-        spread: 24,
-        depth: 85,
+        cardHeight: Math.min(Math.round(targetW * 0.72), 245),
+        spread: 22,
+        depth: 80,
         isMobile: true
       };
     }
+    if (isTablet) {
+      return {
+        cardWidth: 440,
+        cardHeight: 290,
+        spread: 70,
+        depth: 130,
+        isMobile: false
+      };
+    }
     return {
-      cardWidth: cardWidth || 560,
-      cardHeight: cardHeight || 350,
+      cardWidth: cardWidth || 540,
+      cardHeight: cardHeight || 330,
       spread: spread || 125,
       depth: depth || 200,
       isMobile: false
@@ -227,23 +237,22 @@ const DepthCarousel = ({
       let targetDepth;
 
       if (isMobile) {
-        // MOBILE: Significantly larger cards (e.g. 330px - 355px)
-        // Taking up 92-95% of container width so they feel prominent, not like "small screens"
-        targetW = Math.min(Math.max(Math.round(w - 20), 295), 360);
-        targetH = Math.min(Math.round(targetW * 0.85), 315);
-        targetSpread = 24;
-        targetDepth = 85;
+        // MOBILE: Prominent card deck with dedicated vertical clearance for titles & indicators
+        targetW = Math.min(Math.max(Math.round(w - 28), 280), 340);
+        targetH = Math.min(Math.round(targetW * 0.72), 245);
+        targetSpread = 22;
+        targetDepth = 80;
         scaleRef.current = 1; // Pure 1:1 scale on mobile, no downscaling blur!
       } else if (isTablet) {
-        targetW = 460;
-        targetH = 310;
-        targetSpread = 75;
-        targetDepth = 140;
+        targetW = 440;
+        targetH = 290;
+        targetSpread = 70;
+        targetDepth = 130;
         const needed = targetW + targetSpread * 1.5 + 40;
         scaleRef.current = clamp(w / needed, 0.75, 1);
       } else {
-        targetW = cardWidth || 560;
-        targetH = cardHeight || 350;
+        targetW = cardWidth || 540;
+        targetH = cardHeight || 330;
         targetSpread = spread || 125;
         targetDepth = depth || 200;
         const needed = targetW + targetSpread * 2 + 120;
@@ -310,6 +319,7 @@ const DepthCarousel = ({
     tweenRef.current?.kill();
     dragRef.current = {
       x: e.clientX,
+      y: e.clientY,
       startPos: posRef.current,
       lastX: e.clientX,
       lastT: performance.now(),
@@ -326,10 +336,21 @@ const DepthCarousel = ({
       const cfg = cfgRef.current;
       const stepPx = Math.max(cfg.cardWidth * 0.55 * scaleRef.current, 40);
       const dx = e.clientX - drag.x;
-      if (!drag.moved && Math.abs(dx) > 4) {
-        drag.moved = true;
-        rootRef.current?.setPointerCapture(drag.id);
+      const dy = e.clientY - drag.y;
+
+      // Distinguish horizontal carousel dragging from vertical page scrolling on touch devices
+      if (!drag.moved) {
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 5) {
+          // User is scrolling the page vertically — cancel carousel gesture
+          dragRef.current = null;
+          return;
+        }
+        if (Math.abs(dx) > 7 && Math.abs(dx) > Math.abs(dy)) {
+          drag.moved = true;
+          rootRef.current?.setPointerCapture(drag.id);
+        }
       }
+
       if (!drag.moved) return;
       const now = performance.now();
       const dt = Math.max(now - drag.lastT, 1);
@@ -452,7 +473,7 @@ const DepthCarousel = ({
         {data.map((item, i) => (
           <div
             key={i}
-            className="absolute left-1/2 top-1/2 cursor-zoom-in overflow-hidden bg-neutral-900 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] [transform:translate(-50%,-50%)] [transform-origin:center] [will-change:transform,opacity,filter] group"
+            className="absolute left-1/2 top-[39%] xs:top-[41%] sm:top-[44%] md:top-[46%] cursor-zoom-in overflow-hidden bg-neutral-900 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] [transform:translate(-50%,-50%)] [transform-origin:center] [will-change:transform,opacity,filter] group"
             ref={el => {
               cardRefs.current[i] = el;
             }}
@@ -513,7 +534,7 @@ const DepthCarousel = ({
         <>
           <button
             type="button"
-            className="absolute left-1.5 sm:left-4 top-1/2 z-[3000] grid h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/75 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+            className="absolute left-1.5 sm:left-4 top-[39%] xs:top-[41%] sm:top-[44%] md:top-[46%] z-[3000] grid h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/75 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
             aria-label="Previous slide"
             onClick={() => navigateBy(-1)}
           >
@@ -530,7 +551,7 @@ const DepthCarousel = ({
           </button>
           <button
             type="button"
-            className="absolute right-1.5 sm:right-4 top-1/2 z-[3000] grid h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/75 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+            className="absolute right-1.5 sm:right-4 top-[39%] xs:top-[41%] sm:top-[44%] md:top-[46%] z-[3000] grid h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] -translate-y-1/2 place-items-center rounded-full border border-black/20 bg-black/75 text-white backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
             aria-label="Next slide"
             onClick={() => navigateBy(1)}
           >
@@ -548,21 +569,23 @@ const DepthCarousel = ({
         </>
       )}
 
-      {/* Active Design Title & Category Caption */}
+      {/* Active Design Title & Category Caption - Positioned clearly below the artwork */}
       {data[active] && (
-        <div className="absolute bottom-10 sm:bottom-14 left-1/2 -translate-x-1/2 z-[3000] text-center pointer-events-none w-full px-4 max-w-[340px] sm:max-w-md transition-all duration-200">
-          <p className="text-neutral-900 font-clash font-bold text-sm sm:text-base tracking-tight truncate drop-shadow-sm">
-            {data[active].title || data[active].alt}
-          </p>
-          <p className="text-neutral-500 font-sans text-[11px] sm:text-xs truncate mt-0.5">
-            {data[active].category || 'Tap poster to elaborate fullscreen'}
-          </p>
+        <div className="absolute bottom-8 sm:bottom-11 left-1/2 -translate-x-1/2 z-[3000] text-center pointer-events-none w-full px-3 max-w-[320px] xs:max-w-[380px] sm:max-w-md transition-all duration-300 flex flex-col items-center">
+          <div className="inline-flex flex-col items-center px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-2xl bg-white/95 sm:bg-white/90 backdrop-blur-md border border-neutral-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.06)] max-w-full">
+            <h4 className="text-neutral-900 font-clash font-extrabold text-xs xs:text-sm sm:text-base tracking-tight leading-snug truncate max-w-[280px] xs:max-w-[340px] sm:max-w-none">
+              {data[active].title || data[active].alt}
+            </h4>
+            <p className="text-neutral-500 font-sans text-[10px] xs:text-[11px] sm:text-xs tracking-normal mt-0.5 truncate max-w-[280px] xs:max-w-[340px] sm:max-w-none">
+              {data[active].category || 'Tap poster to elaborate fullscreen'}
+            </p>
+          </div>
         </div>
       )}
 
       {showIndicators && count > 1 && (
         <div
-          className="absolute bottom-2 sm:bottom-4 left-1/2 z-[3000] flex -translate-x-1/2 gap-2 rounded-full bg-black/50 px-3.5 py-1.5 backdrop-blur-md border border-white/10 shadow-lg"
+          className="absolute bottom-1.5 sm:bottom-2.5 left-1/2 z-[3000] flex -translate-x-1/2 gap-1.5 sm:gap-2 rounded-full bg-neutral-900/80 px-3 py-1 sm:px-3.5 sm:py-1.5 backdrop-blur-md border border-white/10 shadow-lg"
           role="tablist"
           aria-label="Slides"
         >
@@ -573,8 +596,8 @@ const DepthCarousel = ({
               role="tab"
               aria-selected={active === i}
               aria-label={`Go to slide ${i + 1}`}
-              className={`h-[6px] cursor-pointer rounded-full transition-all duration-[250ms] ${
-                active === i ? 'w-6 bg-[#a3f036]' : 'w-[6px] bg-white/40 hover:bg-white/70'
+              className={`h-[5px] sm:h-[6px] cursor-pointer rounded-full transition-all duration-[250ms] ${
+                active === i ? 'w-5 sm:w-6 bg-[#a3f036]' : 'w-[5px] sm:w-[6px] bg-white/40 hover:bg-white/70'
               }`}
               onClick={() => setFocus(i, true)}
             />

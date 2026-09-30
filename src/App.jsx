@@ -58,13 +58,15 @@ export default function App() {
 
     const sections = ['home', 'about', 'works', 'skills', 'designs', 'contact'];
     const handleScroll = () => {
-      const scrollPos = container.scrollTop + container.clientHeight * 0.35;
+      const containerRect = container.getBoundingClientRect();
+      const triggerLine = container.clientHeight * 0.35;
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
+          const rect = el.getBoundingClientRect();
+          const relTop = rect.top - containerRect.top;
+          const relBottom = rect.bottom - containerRect.top;
+          if (relTop <= triggerLine && relBottom > triggerLine) {
             setActiveSection(`#${sectionId}`);
             break;
           }
@@ -217,7 +219,7 @@ export default function App() {
         
         {/* VIEW MODE 1: PROJECT DETAIL PAGE */}
         {viewMode === 'project-detail' && activeProject && (
-          <div key="detail" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center">
+          <div key="detail" className="min-h-[100dvh] w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center pb-20 md:pb-5">
             <ProjectDetailPage
               project={activeProject}
               onBack={() => handleNavigateToSection('works')}
@@ -229,7 +231,7 @@ export default function App() {
 
         {/* VIEW MODE 2: ALL WORKS GALLERY PAGE */}
         {viewMode === 'all-works' && (
-          <div key="all-works" className="h-screen w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center">
+          <div key="all-works" className="min-h-[100dvh] w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center pb-20 md:pb-5">
             <AllWorksPage
               projects={projects}
               onBack={() => handleNavigateToSection('works')}
@@ -254,11 +256,11 @@ export default function App() {
                 }
               }
             }}
-            className="h-screen w-screen overflow-y-auto overflow-x-hidden snap-y snap-proximity md:snap-mandatory scroll-smooth scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="h-screen w-screen overflow-y-auto overflow-x-hidden snap-none md:snap-y md:snap-mandatory scroll-smooth scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {/* PAGE 1: HOME */}
-            <section id="home" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start pb-16 md:pb-5">
-              <div className="w-full max-w-[1280px] min-h-[calc(100dvh-80px)] md:min-h-0 md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
+            <section id="home" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center md:snap-start pb-20 md:pb-5">
+              <div className="w-full max-w-[1280px] min-h-[calc(100dvh-85px)] md:min-h-0 md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
                 
                 {/* Header / Navbar */}
                 <Navbar onNavigate={handleNavigateToSection} activeHref={activeSection} />
@@ -332,13 +334,13 @@ export default function App() {
             </section>
 
             {/* PAGE 2: ABOUT ME SECTION */}
-            <section id="about" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start pb-16 md:pb-5">
+            <section id="about" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center md:snap-start pb-20 md:pb-5">
               <AboutSection />
             </section>
 
             {/* PAGE 3: WORKS SECTION */}
-            <section id="works" ref={worksSectionRef} className="min-h-[100dvh] md:h-[260vh] w-full md:w-screen relative snap-start pb-16 md:pb-0">
-              <div className="sticky top-0 h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center overflow-hidden pb-16 md:pb-5">
+            <section id="works" ref={worksSectionRef} className="min-h-[100dvh] md:h-[260vh] w-full md:w-screen relative md:snap-start pb-20 md:pb-0">
+              <div className="md:sticky md:top-0 min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center md:overflow-hidden pb-0 md:pb-5">
                 <WorksSection
                   projects={projects}
                   onSelectProject={handleSelectProject}
@@ -350,13 +352,13 @@ export default function App() {
             </section>
 
             {/* PAGE 4: SKILLS SECTION */}
-            <section id="skills" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start pb-16 md:pb-5">
+            <section id="skills" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center md:snap-start pb-20 md:pb-5">
               <SkillsSection />
             </section>
 
             {/* PAGE 4: DESIGNS SHOWCASE */}
-            <section id="designs" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start pb-16 md:pb-5">
-              <div className="w-full max-w-[1280px] min-h-[calc(100dvh-80px)] md:min-h-0 md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
+            <section id="designs" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center md:snap-start pb-20 md:pb-5">
+              <div className="w-full max-w-[1280px] min-h-[calc(100dvh-85px)] md:min-h-0 md:h-full md:max-h-[95vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
                 
                 {/* Clean Title Header */}
                 <div className="w-full pb-2 sm:pb-3 border-b border-neutral-100 z-10 flex items-center justify-between">
@@ -427,7 +429,7 @@ export default function App() {
             </section>
 
             {/* PAGE 5: CONTACT SECTION */}
-            <section id="contact" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center snap-start pb-16 md:pb-5">
+            <section id="contact" className="min-h-[100dvh] md:h-screen w-full md:w-screen p-2 sm:p-4 md:p-5 flex items-center justify-center md:snap-start pb-20 md:pb-5">
               <ContactSection />
             </section>
 

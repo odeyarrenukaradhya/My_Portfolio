@@ -22,6 +22,30 @@ export default function DesignLightbox({
     onNavigate?.(prevIndex);
   }, [currentIndex, items.length, onNavigate]);
 
+  const touchStartX = React.useRef(0);
+  const touchStartY = React.useRef(0);
+
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches[0]) {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (e.changedTouches && e.changedTouches[0]) {
+      const dx = e.changedTouches[0].clientX - touchStartX.current;
+      const dy = e.changedTouches[0].clientY - touchStartY.current;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        if (dx < 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -56,8 +80,10 @@ export default function DesignLightbox({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 md:p-10 select-none"
+        className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6 md:p-10 select-none touch-pan-y"
         onClick={onClose}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {/* TOP RIGHT CLOSE ICON */}
         <button
@@ -66,9 +92,9 @@ export default function DesignLightbox({
             onClose();
           }}
           aria-label="Close design"
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white hover:text-[#a3f036] border border-white/20 hover:border-[#a3f036]/50 backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl active:scale-95 group"
+          className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white hover:text-[#a3f036] border border-white/20 hover:border-[#a3f036]/50 backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl active:scale-95 group"
         >
-          <X className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:rotate-90" />
+          <X className="w-4 h-4 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:rotate-90" />
           <span className="sr-only">Close</span>
         </button>
 
@@ -80,9 +106,9 @@ export default function DesignLightbox({
               handlePrev();
             }}
             aria-label="Previous design"
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white hover:text-[#a3f036] border border-white/20 hover:border-[#a3f036]/50 backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-50 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white hover:text-[#a3f036] border border-white/20 hover:border-[#a3f036]/50 backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         )}
 
@@ -94,9 +120,9 @@ export default function DesignLightbox({
               handleNext();
             }}
             aria-label="Next design"
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white hover:text-[#a3f036] border border-white/20 hover:border-[#a3f036]/50 backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-50 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white hover:text-[#a3f036] border border-white/20 hover:border-[#a3f036]/50 backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         )}
 

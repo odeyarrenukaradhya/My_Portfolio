@@ -45,10 +45,11 @@ body {
   touch-action: manipulation;
 }
 
-/* Mobile responsive fixes */
+/* Mobile responsive & touch optimization */
 @media (max-width: 767px) {
-  .mobile-snap-container {
-    scroll-snap-type: y proximity !important;
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
   }
 }
 

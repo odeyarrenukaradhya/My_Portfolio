@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '375px',
+      },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
         clash: ['"Clash Display"', '"Outfit"', 'sans-serif'],

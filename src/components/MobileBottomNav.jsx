@@ -40,39 +40,44 @@ export default function MobileBottomNav({ activeSection = '#home', onNavigate })
               key={item.id}
               onClick={() => handleClick(item.id)}
               aria-label={item.label}
-              className="relative flex flex-col items-center justify-center w-12 h-11 rounded-2xl cursor-pointer transition-all duration-200 active:scale-90 group focus:outline-none"
+              className="relative flex flex-col items-center justify-center py-1 px-1.5 rounded-xl cursor-pointer transition-all duration-200 active:scale-95 group focus:outline-none min-w-[48px]"
             >
               {/* Subtle Active Pill Glow Background */}
               {isActive && (
                 <motion.div
                   layoutId="bottomNavPill"
-                  className="absolute inset-0 bg-neutral-100 rounded-2xl -z-10"
+                  className="absolute inset-0 bg-neutral-100/90 rounded-xl -z-10 shadow-xs"
                   transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                 />
               )}
 
               {/* Icon with Dynamic Stroke & Color */}
               <Icon
-                className={`w-5 h-5 transition-all duration-200 ${
+                className={`w-4.5 h-4.5 transition-all duration-200 ${
                   isActive
-                    ? 'text-neutral-950 scale-110'
+                    ? 'text-neutral-950 scale-105'
                     : 'text-neutral-400 group-hover:text-neutral-700'
                 }`}
-                strokeWidth={isActive ? 2.5 : 1.8}
+                strokeWidth={isActive ? 2.5 : 1.9}
               />
 
-              {/* Active Neon Lime Dot (Instagram / iOS Style) */}
-              <div className="h-1.5 flex items-center justify-center mt-1">
-                {isActive ? (
-                  <motion.span
-                    layoutId="bottomNavDot"
-                    className="w-1.5 h-1.5 rounded-full bg-[#82cf17] shadow-[0_0_8px_#a3f036]"
-                    transition={{ type: 'spring', stiffness: 450, damping: 32 }}
-                  />
-                ) : (
-                  <span className="w-1.5 h-1.5 opacity-0" />
-                )}
-              </div>
+              {/* Label */}
+              <span
+                className={`text-[9.5px] font-sans tracking-tight transition-colors duration-200 leading-none mt-1 ${
+                  isActive ? 'text-neutral-950 font-extrabold' : 'text-neutral-400 font-medium'
+                }`}
+              >
+                {item.label}
+              </span>
+
+              {/* Active Neon Lime Dot Indicator */}
+              {isActive && (
+                <motion.span
+                  layoutId="bottomNavDot"
+                  className="w-1 h-1 rounded-full bg-[#82cf17] shadow-[0_0_6px_#a3f036] mt-0.5"
+                  transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                />
+              )}
             </button>
           );
         })}

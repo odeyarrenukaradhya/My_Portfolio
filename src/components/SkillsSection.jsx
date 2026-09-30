@@ -257,10 +257,10 @@ export default function SkillsSection() {
   }));
 
   return (
-    <div className="w-full max-w-[1280px] min-h-[92vh] md:h-full md:max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-7 md:p-9 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
+    <div className="w-full max-w-[1280px] min-h-[calc(100dvh-85px)] md:min-h-0 md:h-full md:max-h-[94vh] bg-white rounded-[24px] sm:rounded-[32px] md:rounded-[40px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-3 sm:p-7 md:p-9 relative overflow-y-auto md:overflow-hidden flex flex-col justify-between">
       
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-3 border-b border-neutral-100 z-10 flex-shrink-0 gap-3">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-2.5 sm:pb-3 border-b border-neutral-100 z-10 flex-shrink-0 gap-2.5 sm:gap-3">
         <div>
           <div className="flex items-center gap-2">
             <h2 className="font-clash font-extrabold text-2xl sm:text-4xl md:text-5xl text-neutral-900 tracking-tight uppercase">
@@ -304,10 +304,10 @@ export default function SkillsSection() {
       </div>
 
       {/* CONTROL BAR: CATEGORIES & SEARCH INPUT */}
-      <div className="py-2.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 z-10 flex-shrink-0">
+      <div className="py-2 sm:py-2.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-2.5 z-10 flex-shrink-0">
         
         {/* Category Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full touch-pan-x [-webkit-overflow-scrolling:touch]">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isActive = activeCategory === cat.id;
@@ -315,7 +315,7 @@ export default function SkillsSection() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans font-bold whitespace-nowrap transition-all duration-200 ${
+                className={`flex items-center gap-1.5 px-2.5 xs:px-3 py-1.5 rounded-full text-[11px] xs:text-xs font-sans font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isActive
                     ? 'bg-neutral-900 text-white shadow-md'
                     : 'bg-neutral-100 hover:bg-neutral-200/80 text-neutral-700 border border-neutral-200/60'
@@ -329,14 +329,14 @@ export default function SkillsSection() {
         </div>
 
         {/* Live Search Input */}
-        <div className="relative min-w-[200px] sm:max-w-[240px]">
+        <div className="relative w-full sm:w-auto sm:min-w-[200px] sm:max-w-[240px]">
           <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             placeholder="Search skills..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-full pl-8 pr-7 py-1.5 text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 focus:bg-white transition-all"
+            className="w-full bg-neutral-50 border border-neutral-200 rounded-full pl-8 pr-7 py-1.5 text-base sm:text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 focus:bg-white transition-all"
           />
           {searchQuery && (
             <button
@@ -362,7 +362,7 @@ export default function SkillsSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="w-full h-full max-h-[58vh] overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 scrollbar-thin scrollbar-thumb-neutral-200"
+                className="w-full h-full md:max-h-[58vh] md:overflow-y-auto pr-0 sm:pr-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-3.5 scrollbar-thin scrollbar-thumb-neutral-200"
               >
                 {filteredSkills.map((skill) => (
                   <motion.div
